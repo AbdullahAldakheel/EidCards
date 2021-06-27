@@ -14,5 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $no_of_lines = count(file(storage_path('logs/image.log'))) ;
+    return view('index')->with('no_of_lines', $no_of_lines);
+});
+
+Route::get('/new', function () {
+    $no_of_lines = count(file(storage_path('logs/image.log'))) ;
+    return view('add');
+});
+
+
+Route::get("/i/img/result/{img}", function ($img) {
+    $p = public_path("/img/result/$img");
+    return response()->download($p);
 });
